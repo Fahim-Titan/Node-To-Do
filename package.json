@@ -1,0 +1,29 @@
+{
+  "name": "node_to_do",
+  "version": "1.0.0",
+  "description": "a simple task manager built on NodeJS, ExpressJS as Backend, MongoDB or MSSQL as Database, Angular v4 as Frontend",
+  "main": "app.js",
+  "scripts": {
+    "test": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fahim-Titan/Node-To-Do.git"
+  },
+  "keywords": [
+    "NodeJS",
+    "Angular",
+    "ExpressJS",
+    "MongoDB",
+    "MSSQL"
+  ],
+  "author": "Al Masum Fahim",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Fahim-Titan/Node-To-Do/issues"
+  },
+  "homepage": "https://github.com/Fahim-Titan/Node-To-Do#readme",
+  "dependencies": {
+    "express": "^4.16.2"
+  }
+}
