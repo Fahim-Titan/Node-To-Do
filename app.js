@@ -11,4 +11,4 @@ app.get('/',(req, res)=> res.send('working properly'));
 app.use('/task', task);
 app.use('/user', user);
 
-app.listen(env.getPort());
+app.listen(env.getPort(), ()=> {console.log("Server started. Listening on port " + env.getPort())});
