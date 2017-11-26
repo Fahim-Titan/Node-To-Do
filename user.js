@@ -9,7 +9,7 @@ var router = express.Router();
 var app = express();
 app.use(bodyParser.json()); 
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
-    extended: false
+    extended: true
 })); 
 
 
@@ -35,7 +35,7 @@ router.get('/', function(req, res){
         });
 });
 router.post('/', function(req, res){
-    if(req.body.username != '' && req.body.password != '')
+    if(req.body.username && req.body.password)
     {
         console.log('asd => ' + req.body);
         console.log(req.body.username);
@@ -59,8 +59,10 @@ router.post('/', function(req, res){
     }
     else
     {
+        console.log(req.body.username);
+        console.log(req.body.password);
         res.sendStatus(400);
-         res.json({message: "Bad Request"});
+        // res.json({message: "Bad Request"});
     }
 
     
