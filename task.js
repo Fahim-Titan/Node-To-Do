@@ -29,8 +29,31 @@ router.get('/', function(req, res){
     });
     // res.send('Get: Task working properly')
 });
+
+// POST: ~/task
 router.post('/', function(req, res){
-    res.send('POST: Task working properly')
+    if(req.body.UserID && req.body.TaskName && req.body.TaskDetail){
+        sql.connect(env.getDBConfig(), function(err){
+            if(err) console.log(err);
+    
+            var request = new sql.Request();
+            request.query("Insert into tasks values ('"+req.body.TaskName+"','"+req.body.TaskDetail+"','"+req.body.UserID+"')", (err, recordset)=>{
+                if(err) console.log(err);
+                else{
+                    res.status(200).send("Task Saved Successfully");
+                    console.log(recordset);
+                }
+                sql.close();
+            });
+        });    
+    }
+    else{
+        console.log(req.body.TaskName);
+        console.log(req.body.TaskDetail);
+        console.log(req.body.UserID);
+        res.sendStatus(400);
+    }
+    // res.send('POST: Task working properly')
 });
 router.put('/', function(req, res){
     res.send('PUT: Task working properly')
