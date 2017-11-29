@@ -12,6 +12,24 @@ var router = express.Router();
 
 // Initiating Route Parameters
 
+// Get: ~/task/{id}
+router.get('/:id', function(req, res){
+    sql.connect(env.getDBConfig(), function(err){
+        if(err) console.log(err);
+
+        var request = new sql.Request();
+        request.query('select * from tasks where id = '+req.params.id, (err, recordset)=>{
+            if(err) console.log(err);
+            else{
+                res.send(JSON.stringify(recordset.recordset));
+                console.log(recordset);
+            }
+            sql.close();
+        });
+    });
+    // res.send('Get: Task working properly')
+});
+
 // Get: ~/Task
 router.get('/', function(req, res){
     sql.connect(env.getDBConfig(), function(err){
