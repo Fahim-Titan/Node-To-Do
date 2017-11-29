@@ -1,13 +1,11 @@
-// import { error } from 'util';
-
-//import { read } from 'fs';
-
+// Getting libraries
 const sql = require('mssql');
 var env = require('./env');
 var bodyParser = require('body-parser');
 const express = require('express');
 var router = express.Router();
 
+// initializing libraries
 var app = express();
 app.use(bodyParser.json()); 
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
@@ -15,10 +13,7 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 })); 
 
 
-
-// app.use(express.json());       // to support JSON-encoded bodies
-
-
+// get: ~/user/{id}
 router.get('/:id', function(req, res){
     sql.connect(env.getDBConfig(), function (err) {
             if (err) console.log(err);    
@@ -52,6 +47,7 @@ router.get('/:id', function(req, res){
         });
 });
 
+// Get: ~/user
 router.get('/', function(req, res){
     sql.connect(env.getDBConfig(), function (err) {
             if (err) console.log(err);    
@@ -70,7 +66,7 @@ router.get('/', function(req, res){
         });
 });
 
-
+// Post: ~/user
 router.post('/', function(req, res){
     if(req.body.username && req.body.password)
     {
@@ -106,7 +102,7 @@ router.post('/', function(req, res){
 });
 
 
-
+// Put: ~/user
 router.put('/', function(req, res){
     if(req.body.id && req.body.username && req.body.password){
         sql.connect(env.getDBConfig(), function(err){
@@ -127,7 +123,7 @@ router.put('/', function(req, res){
 });
 
 
-
+// Delete: ~/user/{id}
 router.delete('/:id', function(req, res){
     sql.connect(env.getDBConfig(), function(err){
         if(err) console.log(err);
@@ -144,6 +140,6 @@ router.delete('/:id', function(req, res){
 });
 
 
-
+// exporting the whole router
 module.exports = router;
 
