@@ -18,7 +18,7 @@ router.get('/:id', function(req, res){
         if(err) console.log(err);
 
         var request = new sql.Request();
-        request.query('select * from tasks where id = '+req.params.id, (err, recordset)=>{
+        request.query('select * from tasks where UserID = '+req.params.id, (err, recordset)=>{
             if(err) console.log(err);
             else{
                 res.send(JSON.stringify(recordset.recordset));
@@ -80,7 +80,7 @@ router.put('/', function(req, res){
         sql.connect(env.getDBConfig(), function(err){
             if(err) console.log(err);
     
-            var request = new sql.Request();
+            var request = new sql.Request(); 
             request.query("Update tasks set Taskname = '"+req.body.TaskName+"', taskDetails = '"+req.body.TaskDetail+"' where id = "+req.body.taskId, (err, recordset)=>{
                 if(err) console.log(err);
                 else{
