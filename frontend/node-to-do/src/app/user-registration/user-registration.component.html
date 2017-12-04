@@ -1,0 +1,38 @@
+<button class="btn btn-primary" (click)="switchForm()" [disabled]="registerForm">Register</button>
+<button class="btn btn-primary" (click)="switchForm()" [disabled]=LoginForm>Log In</button>
+
+
+<form *ngIf="registerForm">
+  <div class="form-group">
+    <label for="UserName">UserName:</label>
+    <input ngModel name="UserName" #UserName="ngModel" required id="UserName" type="text" class="form-control" placeholder="Enter Your UserName">
+  </div>
+  <div class="form-group">
+    <label for="Password">Password:</label>
+    <input ngModel name="Password" #Password="ngModel" required type="password" id="Password" class="form-control" placeholder="Enter Your Password">
+  </div>
+  <div class="form-control">
+    <label for="retypePassword">Confirm Password</label>
+    <input ngModel name="retypePassword" #retypePassword="ngModel" required type="password" id="retypePassword" placeholder="Retype Password">
+  </div>
+  <div class="alart alart-danger" *ngIf="!checkPasswordMatch(Password,retypePassword) && retypePassword.dirty">
+    <label>Password Mismatch</label>
+  </div>
+  <button class="btn btn-primary" [disabled]="!checkPasswordMatch(Password,retypePassword) && retypePassword.dirty">Submit</button>
+</form>
+
+
+
+<form *ngIf="LoginForm">
+  <div class="form-control">
+    <label for="UserName"></label>
+    <input ngModel name="UserName" #userName="ngModel" type="text" id="UserName" placeholder="Enter your userName" required>
+  </div>
+  <div class="form-control">
+    <label for=""></label>
+    <input ngModel name="Password" #password="ngModel" type="password" placeholder="Enter your Password" id="Password" required>
+  </div>
+  <button class="btn btn-primary" (click)="login(userName,password)">Submit</button>
+</form>
+
+{{message}}
