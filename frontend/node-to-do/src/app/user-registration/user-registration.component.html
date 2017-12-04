@@ -25,11 +25,11 @@
 
 <form *ngIf="LoginForm">
   <div class="form-control">
-    <label for="UserName"></label>
+    <label for="UserName">UserName: </label>
     <input ngModel name="UserName" #userName="ngModel" type="text" id="UserName" placeholder="Enter your userName" required>
   </div>
   <div class="form-control">
-    <label for=""></label>
+    <label for="">Password: </label>
     <input ngModel name="Password" #password="ngModel" type="password" placeholder="Enter your Password" id="Password" required>
   </div>
   <button class="btn btn-primary" (click)="login(userName,password)">Submit</button>

@@ -8,6 +8,7 @@ import {FormsModule} from '@angular/forms';
 })
 export class UserRegistrationComponent {
   message: string;
+  userLoggedIn = false;
   registerForm = false;
   LoginForm= true;
   switchForm() {
@@ -30,5 +31,6 @@ export class UserRegistrationComponent {
 
   login(userName, password) {
     this.message = 'You are Logged IN!!';
+    this.userLoggedIn = true;
   }
 }
