@@ -1,15 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { UserService } from './../user.service';
+import { UserRegistrationComponent } from './../user-registration/user-registration.component';
+import { Component } from '@angular/core';
+import { Input } from '@angular/core/src/metadata/directives';
 
 @Component({
   selector: 'app-task-list',
   templateUrl: './task-list.component.html',
-  styleUrls: ['./task-list.component.css']
+  styleUrls: ['./task-list.component.css'],
+  providers: []
 })
-export class TaskListComponent implements OnInit {
+export class TaskListComponent {
+  message: string;
+  loggedIn = false;
+  constructor(private userService: UserService) { }
 
-  constructor() { }
+  login() {
+    if (this.userService.isUserLoggedIn()) {
+      this.message = 'here is the tasks list';
+      this.loggedIn = true;
 
-  ngOnInit() {
+      // console.log(this.userService.isUserLoggedIn());
+      return this.loggedIn;
+    }
+
   }
-
 }

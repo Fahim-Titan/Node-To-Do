@@ -1,3 +1,5 @@
-<p>
-  task-list works!
-</p>
+<div *ngIf="!login()">
+  <p>Please Log In first to see your task list</p>
+</div>
+
+{{message}}
