@@ -140,6 +140,36 @@ router.delete('/:id', function(req, res){
 });
 
 
+
+// User Login Method
+router.post('/login',(req, res)=>{
+    if (req.body.username && req.body.password) {
+        sql.connect(env.getDBConfig(), function(err){
+            if(err) console.log(err);
+            var request = new sql.Request();
+            request.query("select top 1 * from users where username = '"+req.body.username+"'", (err,recordset)=>{
+                if(err) console.log(err);
+                else {
+                    var pass = recordset.recordset[0].Password;
+                    console.log(pass);
+                    if (pass === req.body.password) {
+                        res.status(200).send(recordset.recordset);    
+                    } else res.sendStatus(403);
+                    console.log(recordset);
+                }
+                sql.close();
+            })
+        })
+    } else{
+        console.log(req.body.username + "why?");
+        console.log(req.body.password+ "pass");
+        res.sendStatus(400);
+    }
+    
+});
+
+
+
 // exporting the whole router
 module.exports = router;
 
