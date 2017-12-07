@@ -1,7 +1,9 @@
+import { Http, Headers, RequestOptions, ResponseContentType, RequestMethod } from '@angular/http';
 import { UserService } from './../user.service';
 import { Component, transition } from '@angular/core';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, NgForm} from '@angular/forms';
 import { Input } from '@angular/core/src/metadata/directives';
+
 
 @Component({
   selector: 'app-user-registration',
@@ -11,9 +13,9 @@ import { Input } from '@angular/core/src/metadata/directives';
 })
 
 export class UserRegistrationComponent {
-  constructor(private userService: UserService) { }
+  constructor(private http: Http, private userService: UserService) { }
 
-  message: string;
+  message = 'testing';
   userLoggedIn = false;
   registerForm = false;
   LoginForm= true;
@@ -35,9 +37,32 @@ export class UserRegistrationComponent {
     }
   }
 
-  login(userName, password) {
-    this.message = 'You are Logged IN!!';
-    this.userLoggedIn = true;
-    this.userService.userLoggedIn(true);
+  login(f) {
+    // this.userService.login(f.value).subscribe(response => {
+    //   console.log(response.json);
+    // });
+    const header = new Headers();
+    header.append('Content-Type', 'application/json');
+    const options = new RequestOptions({
+      url: 'http://localhost:3000/user/login',
+      headers: header,
+      responseType: ResponseContentType.Json,
+      method: RequestMethod.Post,
+      body: JSON.stringify(f)
+    });
+    this.http.post('http://localhost:3000/user/login', JSON.stringify(f), options).subscribe(response => {
+      console.log(response);
+      if (response.ok) {
+        this.message = 'You are Logged IN!!';
+        this.userLoggedIn = true;
+        this.userService.userLoggedIn(true);
+      }
+    }, error => {
+      if(error) {
+        this.message = 'sorry. wrong password';
+        console.log(this.message);
+      }
+    });
+    console.log(f);
   }
 }

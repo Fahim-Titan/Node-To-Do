@@ -1,3 +1,4 @@
+import { HttpModule } from '@angular/http';
 import { UserService } from './user.service';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
@@ -20,7 +21,8 @@ import { CreateTaskComponent } from './create-task/create-task.component';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpModule
   ],
   providers: [UserService],
   bootstrap: [AppComponent]

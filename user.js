@@ -13,6 +13,54 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 })); 
 
 
+
+app.use(function(req, res, next) {
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    res.setHeader('Access-Control-Allow-Credentials', true);    
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    next();
+  });
+
+// User Login Method
+// ~/user/login
+router.post('/login',(req, res)=>{
+    if (req.body.UserName && req.body.Password) {
+        console.log(req.body.UserName);
+        console.log(req.body.Password);
+        sql.connect(env.getDBConfig(), function(err){
+            if(err) console.log(err);
+            var request = new sql.Request();
+            request.query("select top 1 * from users where username = '"+req.body.UserName+"'", (err,recordset)=>{
+                if(err) console.log(err);
+                else {
+                    if (recordset.rowsAffected == 0){
+                        res.sendStatus(404);
+                    } else {
+                        var pass = recordset.recordset[0].Password;
+                        console.log(pass);
+                        if (pass == req.body.Password) {
+                            res.status(200).send(recordset.recordset);    
+                        } else res.sendStatus(403);
+                        console.log(recordset);
+                    }
+                    
+                }
+                sql.close();
+            })
+        })
+    } else{
+        console.log(req.body.UserName);
+        console.log(req.body.Password);
+        console.log('bad req');
+        res.sendStatus(400);
+    }
+    
+});
+
+
+
+
 // get: ~/user/{id}
 router.get('/:id', function(req, res){
     sql.connect(env.getDBConfig(), function (err) {
@@ -66,8 +114,8 @@ router.get('/', function(req, res){
         });
 });
 
-// Post: ~/user
-router.post('/', function(req, res){
+// Post: ~/user/registration
+router.post('/registration', function(req, res){
     if(req.body.username && req.body.password)
     {
         console.log('asd => ' + req.body);
@@ -141,32 +189,6 @@ router.delete('/:id', function(req, res){
 
 
 
-// User Login Method
-router.post('/login',(req, res)=>{
-    if (req.body.username && req.body.password) {
-        sql.connect(env.getDBConfig(), function(err){
-            if(err) console.log(err);
-            var request = new sql.Request();
-            request.query("select top 1 * from users where username = '"+req.body.username+"'", (err,recordset)=>{
-                if(err) console.log(err);
-                else {
-                    var pass = recordset.recordset[0].Password;
-                    console.log(pass);
-                    if (pass === req.body.password) {
-                        res.status(200).send(recordset.recordset);    
-                    } else res.sendStatus(403);
-                    console.log(recordset);
-                }
-                sql.close();
-            })
-        })
-    } else{
-        console.log(req.body.username + "why?");
-        console.log(req.body.password+ "pass");
-        res.sendStatus(400);
-    }
-    
-});
 
 
 
