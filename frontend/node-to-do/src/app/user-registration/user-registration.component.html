@@ -1,8 +1,10 @@
-<button class="btn btn-primary" (click)="switchForm()" [disabled]="registerForm">Register</button>
-<button class="btn btn-primary" (click)="switchForm()" [disabled]="LoginForm">Log In</button>
+<div class="col-md-6 col-md-offset-3">
+  <button class="btn btn-primary" (click)="switchForm()" [disabled]="registerForm">Register</button>
+  <button class="btn btn-primary" (click)="switchForm()" [disabled]="LoginForm">Log In</button>
+</div>
 
 
-<form *ngIf="registerForm">
+<form *ngIf="registerForm" class="col-md-6 col-md-offset-3" #r="ngForm" (ngSubmit)="register(r.value)">
   <div class="form-group">
     <label for="UserName">UserName:</label>
     <input ngModel name="UserName" #UserName="ngModel" required id="UserName" type="text" class="form-control" placeholder="Enter Your UserName">
@@ -11,26 +13,29 @@
     <label for="Password">Password:</label>
     <input ngModel name="Password" #Password="ngModel" required type="password" id="Password" class="form-control" placeholder="Enter Your Password">
   </div>
-  <div class="form-control">
-    <label for="retypePassword">Confirm Password</label>
-    <input ngModel name="retypePassword" #retypePassword="ngModel" required type="password" id="retypePassword" placeholder="Retype Password">
+  <div class="form-group">
+    <label for="retypePassword">Confirm Password: </label>
+    <input ngModel name="retypePassword" #retypePassword="ngModel" required type="password" id="retypePassword" class="form-control" placeholder="Retype Password">
   </div>
   <div class="alart alart-danger" *ngIf="!checkPasswordMatch(Password,retypePassword) && retypePassword.dirty">
     <label>Password Mismatch</label>
   </div>
-  <button class="btn btn-primary" [disabled]="!checkPasswordMatch(Password,retypePassword) && retypePassword.dirty">Submit</button>
+  <div class="form-group">
+    <button class="btn btn-primary btn-submit" [disabled]="!checkPasswordMatch(Password,retypePassword) && retypePassword.dirty">Submit</button>
+  </div>
+  
 </form>
 
 
 
-<form *ngIf="LoginForm" #f="ngForm" (ngSubmit)="login(f.value)">
-  <div class="form-control">
+<form *ngIf="LoginForm" #f="ngForm" (ngSubmit)="login(f.value)" class="col-md-6 col-md-offset-3">
+  <div class="form-group">
     <label for="UserName">UserName: </label>
-    <input ngModel name="UserName" #userName="ngModel" type="text" id="UserName" placeholder="Enter your userName" required>
+    <input class="form-control" ngModel name="UserName" #userName="ngModel" type="text" id="UserName" placeholder="Enter your userName" required>
   </div>
-  <div class="form-control">
+  <div class="form-group">
     <label for="">Password: </label>
-    <input ngModel name="Password" #password="ngModel" type="password" placeholder="Enter your Password" id="Password" required>
+    <input class="form-control" ngModel name="Password" #password="ngModel" type="password" placeholder="Enter your Password" id="Password" required>
   </div>
   <button class="btn btn-primary">Submit</button>
   {{message}}

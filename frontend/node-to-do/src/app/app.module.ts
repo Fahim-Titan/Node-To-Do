@@ -1,10 +1,13 @@
+// Default Modules
 import { HttpModule } from '@angular/http';
-import { UserService } from './user.service';
 import { FormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
+// Service
+import { UserService } from './user.service';
 
+// Component
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './/app-routing.module';
 import { UserRegistrationComponent } from './user-registration/user-registration.component';

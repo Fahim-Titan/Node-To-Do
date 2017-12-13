@@ -3,6 +3,8 @@ import { UserService } from './../user.service';
 import { Component, transition } from '@angular/core';
 import {FormsModule, NgForm} from '@angular/forms';
 import { Input } from '@angular/core/src/metadata/directives';
+import { Response } from '@angular/http/src/static_response';
+import { error } from 'selenium-webdriver';
 
 
 @Component({
@@ -58,11 +60,38 @@ export class UserRegistrationComponent {
         this.userService.userLoggedIn(true);
       }
     }, error => {
-      if(error) {
+      if (error) {
         this.message = 'sorry. wrong password';
         console.log(this.message);
       }
     });
     console.log(f);
+  }
+
+
+  register(r) {
+    console.log(r);
+    const header = new Headers();
+    header.append('Content-Type', 'application/json');
+    const options = new RequestOptions({
+      url: 'http://localhost:3000/user/registration',
+      headers: header,
+      responseType: ResponseContentType.Json,
+      method: RequestMethod.Post,
+      body: JSON.stringify(r)
+    });
+    this.http.post('http://localhost:3000/user/registration', JSON.stringify(r), options).subscribe(response => {
+      console.log(response);
+      if (response.ok) {
+        this.message = 'You are Registered';
+        this.userLoggedIn = true;
+        this.userService.userLoggedIn(true);
+      }
+    }, error => {
+      if (error) {
+        this.message = 'something happened, try again later';
+        // console.log(error);
+      }
+    });
   }
 }
