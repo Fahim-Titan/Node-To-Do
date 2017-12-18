@@ -18,7 +18,7 @@ export class UserRegistrationComponent {
   constructor(private http: Http, private userService: UserService) { }
 
   message = '';
-  userLoggedIn = false;
+  userLoggedIn = this.userService.isUserLoggedIn();
   registerForm = false;
   LoginForm= true;
   switchForm() {
@@ -44,6 +44,7 @@ export class UserRegistrationComponent {
       if (response.status === 200 ) {
         this.message = 'You are Logged IN!!';
         this.userService.userLoggedIn(true);
+        this.userLoggedIn = true;
       }
     },error => {
       if (error) {
@@ -67,4 +68,9 @@ export class UserRegistrationComponent {
       }
     });
   }
+
+   logout() {
+    this.userService.logout();
+    this.userLoggedIn = false;
+   }
 }

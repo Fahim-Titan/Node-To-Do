@@ -49,4 +49,8 @@ export class UserService {
 
     return this.http.post(this.mainUrl + '/registration', JSON.stringify(r), options);
   }
+
+  logout() {
+    localStorage.removeItem('login');
+  }
 }
