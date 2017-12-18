@@ -12,13 +12,13 @@ export class UserService {
 
   isUserLoggedIn() {
     // console.log(this.LoggedIn);
-    if (localStorage.getItem('login') === 'true') {
+    if (localStorage.getItem('user') !== '') {
       return true;
     }
     return false;
   }
   userLoggedIn(user) {
-    localStorage.setItem('login', 'true');
+    localStorage.setItem('user', JSON.stringify(user));
     // console.log(this.LoggedIn);
   }
   login(f) {
@@ -51,6 +51,6 @@ export class UserService {
   }
 
   logout() {
-    localStorage.removeItem('login');
+    localStorage.removeItem('user');
   }
 }

@@ -1,3 +1,4 @@
+import { User } from './../Model/user';
 import { Http, Headers, RequestOptions, ResponseContentType, RequestMethod } from '@angular/http';
 import { UserService } from './../user.service';
 import { Component, transition } from '@angular/core';
@@ -15,8 +16,8 @@ import { error } from 'selenium-webdriver';
 })
 
 export class UserRegistrationComponent {
+  private user: User;
   constructor(private http: Http, private userService: UserService) { }
-
   message = '';
   userLoggedIn = this.userService.isUserLoggedIn();
   registerForm = false;
@@ -43,8 +44,14 @@ export class UserRegistrationComponent {
     this.userService.login(f).subscribe(response => {
       if (response.status === 200 ) {
         this.message = 'You are Logged IN!!';
-        this.userService.userLoggedIn(true);
+        this.user = new User(response.text());
+        this.userService.userLoggedIn(this.user);
         this.userLoggedIn = true;
+        // console.log(response);
+        // console.log(response.text());
+        // let text = JSON.parse(response.text());
+        // console.log(text[0].UserName);
+        console.log(this.user.UserName);
       }
     },error => {
       if (error) {

@@ -1,3 +1,4 @@
+
 // Default Modules
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
@@ -7,6 +8,9 @@ import { NgModule } from '@angular/core';
 // Service
 import { UserService } from './user.service';
 
+// Model
+
+
 // Component
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './/app-routing.module';
@@ -14,12 +18,13 @@ import { UserRegistrationComponent } from './user-registration/user-registration
 import { TaskListComponent } from './task-list/task-list.component';
 import { CreateTaskComponent } from './create-task/create-task.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
     UserRegistrationComponent,
     TaskListComponent,
-    CreateTaskComponent
+    CreateTaskComponent,
   ],
   imports: [
     BrowserModule,
