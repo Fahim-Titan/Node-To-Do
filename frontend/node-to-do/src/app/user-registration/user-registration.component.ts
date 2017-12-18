@@ -17,7 +17,7 @@ import { error } from 'selenium-webdriver';
 export class UserRegistrationComponent {
   constructor(private http: Http, private userService: UserService) { }
 
-  message = 'testing';
+  message = '';
   userLoggedIn = false;
   registerForm = false;
   LoginForm= true;
@@ -40,49 +40,22 @@ export class UserRegistrationComponent {
   }
 
   login(f) {
-    // this.userService.login(f.value).subscribe(response => {
-    //   console.log(response.json);
-    // });
-    const header = new Headers();
-    header.append('Content-Type', 'application/json');
-    const options = new RequestOptions({
-      url: 'http://localhost:3000/user/login',
-      headers: header,
-      responseType: ResponseContentType.Json,
-      method: RequestMethod.Post,
-      body: JSON.stringify(f)
-    });
-    this.http.post('http://localhost:3000/user/login', JSON.stringify(f), options).subscribe(response => {
-      console.log(response);
-      if (response.ok) {
+    this.userService.login(f).subscribe(response => {
+      if (response.status === 200 ) {
         this.message = 'You are Logged IN!!';
-        this.userLoggedIn = true;
         this.userService.userLoggedIn(true);
       }
-    }, error => {
+    },error => {
       if (error) {
         this.message = 'sorry. wrong password';
         console.log(this.message);
       }
     });
-    console.log(f);
   }
 
-
   register(r) {
-    console.log(r);
-    const header = new Headers();
-    header.append('Content-Type', 'application/json');
-    const options = new RequestOptions({
-      url: 'http://localhost:3000/user/registration',
-      headers: header,
-      responseType: ResponseContentType.Json,
-      method: RequestMethod.Post,
-      body: JSON.stringify(r)
-    });
-    this.http.post('http://localhost:3000/user/registration', JSON.stringify(r), options).subscribe(response => {
-      console.log(response);
-      if (response.ok) {
+    this.userService.register(r).subscribe(response => {
+      if (response.status === 200) {
         this.message = 'You are Registered';
         this.userLoggedIn = true;
         this.userService.userLoggedIn(true);
