@@ -44,16 +44,17 @@ export class UserRegistrationComponent {
     this.userService.login(f).subscribe(response => {
       if (response.status === 200 ) {
         this.message = 'You are Logged IN!!';
-        this.user = new User(response.text());
-        this.userService.userLoggedIn(this.user);
+        // this.user = new User();
+        // this.user.setUser(response.text());
+        this.userService.userLoggedIn(response.text());
         this.userLoggedIn = true;
         // console.log(response);
         // console.log(response.text());
         // let text = JSON.parse(response.text());
         // console.log(text[0].UserName);
-        console.log(this.user.UserName);
+        // console.log(this.user.UserName);
       }
-    },error => {
+    }, error => {
       if (error) {
         this.message = 'sorry. wrong password';
         console.log(this.message);
@@ -65,7 +66,7 @@ export class UserRegistrationComponent {
     this.userService.register(r).subscribe(response => {
       if (response.status === 200) {
         this.message = 'You are Registered';
-        this.userLoggedIn = true;
+        // this.userLoggedIn = true;
         this.userService.userLoggedIn(true);
       }
     }, error => {

@@ -1,3 +1,4 @@
+import { User } from './Model/user';
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions, ResponseContentType, RequestMethod } from '@angular/http';
 import { headersToString } from 'selenium-webdriver/http';
@@ -8,19 +9,32 @@ import { headersToString } from 'selenium-webdriver/http';
 @Injectable()
 export class UserService {
   private mainUrl = 'http://localhost:3000/user';
+  private user: User;
   constructor(private http: Http) {}
 
   isUserLoggedIn() {
     // console.log(this.LoggedIn);
-    if (localStorage.getItem('user') !== '') {
-      return true;
+    if (localStorage.getItem('user') === null) {
+      // console.log(localStorage.getItem('user'));
+      return false;
     }
-    return false;
+    return true;
   }
-  userLoggedIn(user) {
-    localStorage.setItem('user', JSON.stringify(user));
+  userLoggedIn(jsonData) {
+    this.user = new User().setUser(jsonData);
+    // this.user.setUser(jsonData);
+    localStorage.setItem('user', JSON.stringify(this.user));
     // console.log(this.LoggedIn);
   }
+
+  getUserData() {
+    // console.log(localStorage.getItem('user'));
+    this.user = new User().getUser(localStorage.getItem('user'));
+    return this.user;
+  }
+
+
+
   login(f) {
     const header = new Headers();
     header.append('Content-Type', 'application/json');
